@@ -7,6 +7,15 @@ import {
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
+window.addEventListener("error", (e) => {
+  console.error("Runtime error:", e.error || e.message);
+  try { toast("Error: " + (e.error?.message || e.message), "err"); } catch {}
+});
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled rejection:", e.reason);
+  try { toast("Error: " + (e.reason?.message || e.reason), "err"); } catch {}
+});
+
 const ROTATION = {
   0: { sesi: "Rest", label: "Minggu - Rest" },
   1: { sesi: "A", label: "Senin - Sesi A (Push)" },
@@ -116,12 +125,19 @@ $("#authForm").addEventListener("submit", async (e) => {
     const fn = authMode === "signup" ? signUp : signIn;
     const { data, error } = await fn(email, password);
     if (error) throw error;
-    if (authMode === "signup" && !data.session) {
-      msg.textContent = "Akun dibuat. Cek email verifikasi, atau login kalau confirm email dimatikan.";
+    if (data.session) {
+      msg.textContent = "Berhasil. Memuat...";
       msg.className = "auth-msg ok";
+      showApp(data.session.user);
+    } else if (authMode === "signup") {
+      msg.textContent = "Akun dibuat. Cek email verifikasi untuk aktifkan akun.";
+      msg.className = "auth-msg ok";
+    } else {
+      msg.textContent = "Login berhasil tapi sesi kosong. Coba lagi.";
+      msg.className = "auth-msg";
     }
   } catch (err) {
-    msg.textContent = err.message || "Gagal. Coba lagi.";
+    msg.textContent = err.message || err.error_description || "Gagal. Coba lagi.";
     msg.className = "auth-msg";
   } finally {
     btn.disabled = false;
@@ -168,13 +184,15 @@ $$(".tab-btn").forEach((btn) => {
 async function loadAll() {
   try {
     state.entries = await fetchEntries();
-    renderSummary();
-    renderTrend();
-    renderConsistency();
-    renderHistory();
   } catch (e) {
-    toast(e.message || "Gagal muat data", "err");
+    console.error("fetchEntries:", e);
+    toast(e.message || "Gagal muat data. Cek tabel Supabase / RLS.", "err");
+    state.entries = state.entries || [];
   }
+  renderSummary();
+  renderTrend();
+  renderConsistency();
+  renderHistory();
 }
 
 $("#logForm").addEventListener("submit", async (e) => {
@@ -630,17 +648,23 @@ async function init() {
   $("#logTanggal").value = todayStr();
   $("#todoDate").value = todayStr();
 
-  const user = await getUser();
-  if (user) {
-    showApp(user);
-  } else {
-    showAuth();
-  }
-
   onAuthChange((u) => {
-    if (u) showApp(u);
-    else showAuth();
+    if (u) {
+      if (!state.user) showApp(u);
+    } else {
+      if (state.user) showAuth();
+    }
   });
+
+  try {
+    const user = await getUser();
+    if (user) showApp(user);
+    else showAuth();
+  } catch (e) {
+    console.error(e);
+    showAuth();
+    $("#authMsg").textContent = "Koneksi ke server gagal. Cek internet lalu refresh.";
+  }
 }
 
 init();
