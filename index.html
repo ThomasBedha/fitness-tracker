@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>Fitness Tracker</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/favicon.svg">
+<link rel="manifest" href="/assets/manifest.webmanifest">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 40 L26 40 L30 22 L36 48 L41 32 L50 32" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Fitness Tracker</span>
+    </div>
+    <p class="auth-sub">Masuk untuk sinkron data di semua device.</p>
+    <form id="authForm" autocomplete="on">
+      <label class="field">
+        <span>Email</span>
+        <input id="authEmail" type="email" name="email" autocomplete="email" required placeholder="nama@email.com">
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="authPassword" type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="min. 6 karakter">
+      </label>
+      <button id="authBtn" type="submit" class="btn-primary">Masuk</button>
+    </form>
+    <button id="authToggle" type="button" class="link-btn">Belum punya akun? Daftar</button>
+    <p id="authMsg" class="auth-msg" role="status"></p>
+  </div>
+</div>
+
+<div id="app" class="app" hidden>
+  <header class="topbar">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 40 L26 40 L30 22 L36 48 L41 32 L50 32" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Fitness Tracker</span>
+    </div>
+    <button id="logoutBtn" class="btn-ghost" title="Keluar">Keluar</button>
+  </header>
+
+  <main class="content">
+
+    <section id="tab-plan" class="tab-panel">
+      <h1>Jadwal Olahraga</h1>
+      <p class="lead">Prof. 71 kg / 175 cm, pernah gym 2-3 bulan. Tujuan: perut rata, turun lemak, naik otot (rekomposisi).</p>
+
+      <div class="callout">
+        <strong>Aturan umum</strong>
+        <ul>
+          <li>4 sesi/minggu, jeda minimal 1 hari antar sesi berat.</li>
+          <li>25-35 menit per sesi. Pemanasan 3-5 menit, pendinginan stretching 3 menit.</li>
+          <li>Naik beban tiap minggu: tambah 1-2 rep, atau ganti versi lebih susah.</li>
+        </ul>
+      </div>
+
+      <h2>Sesi A - Push <span class="tag tag-a">Dada/Bahu/Tricep</span></h2>
+      <table class="data-table">
+        <thead><tr><th>Gerakan</th><th>Set x Rep</th></tr></thead>
+        <tbody>
+          <tr><td>Push-up biasa</td><td>3 x 8-15</td></tr>
+          <tr><td>Pike push-up</td><td>3 x 6-12</td></tr>
+          <tr><td>Dips kursi</td><td>3 x 8-12</td></tr>
+          <tr><td>Push-up lebar</td><td>2 x 10-15</td></tr>
+          <tr><td>Plank</td><td>3 x 30-60 dtk</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">Progresi: push-up &rarr; diamond &rarr; archer &rarr; decline (kaki di kasur).</p>
+
+      <h2>Sesi B - Legs <span class="tag tag-b">Kaki/Glute</span></h2>
+      <table class="data-table">
+        <thead><tr><th>Gerakan</th><th>Set x Rep</th></tr></thead>
+        <tbody>
+          <tr><td>Squat bodyweight</td><td>3 x 15-20</td></tr>
+          <tr><td>Split squat (per kaki)</td><td>3 x 10-12</td></tr>
+          <tr><td>Glute bridge</td><td>3 x 15-20</td></tr>
+          <tr><td>Wall sit</td><td>3 x 30-60 dtk</td></tr>
+          <tr><td>Calf raise</td><td>3 x 20</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">Progresi: squat &rarr; pistol squat (bantu kursi) &rarr; jump squat.</p>
+
+      <h2>Sesi C - Pull + Core <span class="tag tag-c">Punggung/Perut</span></h2>
+      <table class="data-table">
+        <thead><tr><th>Gerakan</th><th>Set x Rep</th></tr></thead>
+        <tbody>
+          <tr><td>Pull-up / chin-up (kalau ada bar)</td><td>3 x max</td></tr>
+          <tr><td>Towel row pintu (tanpa bar)</td><td>3 x 10-12</td></tr>
+          <tr><td>Superman</td><td>3 x 12-15</td></tr>
+          <tr><td>Dead bug</td><td>3 x 10/sisi</td></tr>
+          <tr><td>Hollow hold</td><td>3 x 20-40 dtk</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">Tanpa bar: towel row + superman ganti pull-up.</p>
+
+      <h2>Sesi D - Kardio + Circuit <span class="tag tag-d">Bakar Lemak</span></h2>
+      <p>Circuit 3 putaran, 30 dtk kerja / 15 dtk rest:</p>
+      <ul class="plain-list">
+        <li>Burpee</li>
+        <li>Jumping jack</li>
+        <li>Mountain climber</li>
+        <li>Squat jump</li>
+        <li>High knee</li>
+      </ul>
+      <p class="hint">Lalu jalan cepat 30-45 menit. Jalan cepat paling efektif lawan lemak visceral.</p>
+
+      <h2>Rotasi Mingguan</h2>
+      <table class="data-table">
+        <thead><tr><th>Sen</th><th>Sel</th><th>Rab</th><th>Kam</th><th>Jum</th><th>Sab</th><th>Min</th></tr></thead>
+        <tbody><tr><td class="hl">A</td><td>Kardio jalan</td><td class="hl">C</td><td>Rest</td><td class="hl">B</td><td class="hl">D</td><td>Rest</td></tr></tbody>
+      </table>
+      <p class="hint">Hari tak menentu? Jalan urut A &rarr; B &rarr; C &rarr; D, sisipkan hari istirahat. Yang penting 4 sesi kekuatan + beberapa jalan cepat per minggu.</p>
+
+      <h2>Bonus Gym</h2>
+      <table class="data-table">
+        <thead><tr><th>Gerakan</th><th>Set x Rep</th></tr></thead>
+        <tbody>
+          <tr><td>Deadlift</td><td>3 x 5</td></tr>
+          <tr><td>Squat barbel</td><td>3 x 5</td></tr>
+          <tr><td>Bench press</td><td>3 x 5</td></tr>
+          <tr><td>Barbell row</td><td>3 x 8</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Nutrition</h2>
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-num">2000-2100</span><span class="stat-label">kkal/hari (recomp dari maintenance ~2400)</span></div>
+        <div class="stat"><span class="stat-num">110-130g</span><span class="stat-label">protein/hari</span></div>
+        <div class="stat"><span class="stat-num">7-8 jam</span><span class="stat-label">tidur</span></div>
+        <div class="stat"><span class="stat-num">2-3 L</span><span class="stat-label">air/hari</span></div>
+      </div>
+      <p class="hint">Protein murah: telur, ayam, tahu/tempe, sarden kaleng, susu. Kurangi gula, gorengan, mie instan, nasi porsi besar, minuman manis.</p>
+    </section>
+
+    <section id="tab-log" class="tab-panel" hidden>
+      <h1>Log Harian</h1>
+      <p class="lead">Catat tiap hari (atau tiap minggu). Berat dan lingkar perut adalah metrik utama.</p>
+      <form id="logForm" class="card form-card">
+        <div class="grid-2">
+          <label class="field"><span>Tanggal</span><input id="logTanggal" type="date" required></label>
+          <label class="field"><span>Sesi</span>
+            <select id="logSesi">
+              <option value="">-</option>
+              <option value="A">A - Push</option>
+              <option value="B">B - Legs</option>
+              <option value="C">C - Pull + Core</option>
+              <option value="D">D - Kardio + Circuit</option>
+              <option value="Rest">Rest</option>
+            </select>
+          </label>
+          <label class="field"><span>Berat (kg)</span><input id="logBerat" type="number" step="0.01" min="0" placeholder="71.15"></label>
+          <label class="field"><span>Lingkar perut (cm)</span><input id="logLingkar" type="number" step="0.1" min="0" placeholder="88"></label>
+        </div>
+        <label class="field"><span>Mood</span>
+          <select id="logMood">
+            <option value="">-</option>
+            <option value="Good">Good</option>
+            <option value="Neutral">Neutral</option>
+            <option value="Bad">Bad</option>
+          </select>
+        </label>
+        <label class="field"><span>Catatan</span><textarea id="logCatatan" rows="3" placeholder="mis. bloating habis mie"></textarea></label>
+        <div class="row-end">
+          <button type="button" id="logCancel" class="btn-ghost" hidden>Batal</button>
+          <button type="submit" class="btn-primary">Simpan</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="tab-todo" class="tab-panel" hidden>
+      <h1>Todo Harian</h1>
+      <div class="todo-header">
+        <input id="todoDate" type="date">
+        <div class="todo-progress">
+          <div class="todo-bar"><div id="todoBarFill" class="todo-bar-fill"></div></div>
+          <span id="todoCount">0/0</span>
+        </div>
+      </div>
+      <p id="todoStreak" class="streak"></p>
+      <ul id="todoList" class="todo-list"></ul>
+      <form id="todoForm" class="todo-add">
+        <input id="todoInput" type="text" placeholder="Tambah todo custom..." maxlength="80">
+        <button type="submit" class="btn-primary">Tambah</button>
+      </form>
+      <button id="todoGenBtn" class="btn-ghost full">Generate checklist dari jadwal hari ini</button>
+    </section>
+
+    <section id="tab-progress" class="tab-panel" hidden>
+      <h1>Progress</h1>
+      <div class="summary-grid">
+        <div class="card summary">
+          <span class="summary-label">Berat</span>
+          <span id="sumBeratNow" class="summary-value">-</span>
+          <span id="sumBeratDelta" class="summary-delta"></span>
+          <svg id="sparkBerat" class="spark" viewBox="0 0 100 28" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="card summary">
+          <span class="summary-label">Lingkar perut</span>
+          <span id="sumLingkarNow" class="summary-value">-</span>
+          <span id="sumLingkarDelta" class="summary-delta"></span>
+          <svg id="sparkLingkar" class="spark" viewBox="0 0 100 28" preserveAspectRatio="none"></svg>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-head">
+          <h2>Tren</h2>
+          <div class="seg" id="rangeSeg">
+            <button data-range="7" class="seg-btn">7d</button>
+            <button data-range="30" class="seg-btn active">30d</button>
+            <button data-range="all" class="seg-btn">All</button>
+          </div>
+        </div>
+        <svg id="trendChart" class="chart" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="legend">
+          <span class="lg"><i class="dot dot-berat"></i>Berat (kg)</span>
+          <span class="lg"><i class="dot dot-lingkar"></i>Lingkar perut (cm)</span>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="chart-head"><h2>Konsistensi sesi / minggu</h2></div>
+        <svg id="consistChart" class="chart" viewBox="0 0 360 160" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <h2>Riwayat</h2>
+      <div id="historyWrap"></div>
+    </section>
+
+    <section id="tab-info" class="tab-panel" hidden>
+      <h1>Cara Pakai</h1>
+      <div class="callout">
+        <ol>
+          <li>Buka <strong>Log</strong>, isi berat & lingkar perut. Simpan.</li>
+          <li>Buka <strong>Todo</strong>, klik <em>Generate checklist</em> untuk checklist otomatis hari ini. Centang selesai.</li>
+          <li>Buka <strong>Progress</strong>, lihat tren. Ukur tiap 2 minggu, jangan tiap hari.</li>
+          <li>Data tersimpan di cloud, sinkron otomatis di HP & laptop setelah login.</li>
+        </ol>
+      </div>
+      <h2>Catatan</h2>
+      <p>Perut bengkak sore tapi rata pagi = gas / air, bukan lemak. Yakult bisa bantu sedikit di situ.</p>
+      <p>Ukur progres tiap 2 minggu: lingkar perut, foto, berat. Bukan timbangan harian.</p>
+      <button id="infoLogout" class="btn-ghost">Keluar</button>
+    </section>
+
+  </main>
+
+  <nav class="tabbar">
+    <button data-tab="plan" class="tab-btn active">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Plan</span>
+    </button>
+    <button data-tab="log" class="tab-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Log</span>
+    </button>
+    <button data-tab="todo" class="tab-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg><span>Todo</span>
+    </button>
+    <button data-tab="progress" class="tab-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 16l4-6 3 3 5-8"/></svg><span>Progress</span>
+    </button>
+    <button data-tab="info" class="tab-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Info</span>
+    </button>
+  </nav>
+</div>
+
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>
